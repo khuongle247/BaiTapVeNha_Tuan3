@@ -14,45 +14,42 @@ class ComponentsScreen extends StatelessWidget {
         title: Text(
           'UI Components List',
           style: TextStyle(
-            fontSize: 30,
+            fontSize: 24,
             fontWeight: FontWeight.bold,
-            color: Colors.blue,
+            color: Colors.white,
           ),
         ),
         centerTitle: true,
+        backgroundColor: Colors.blue,
       ),
-      body: Center(
+      body: Padding(
+        padding: EdgeInsets.all(16),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          crossAxisAlignment: CrossAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SizedBox(
-              width: 300,
-              child: ComponentButton(context, "Text", "Displays text", TextDetailScreen()),
-            ),
-            SizedBox(
-              width: 300,
-              child: ComponentButton(context, "Image", "Displays an image", image()),
-            ),
-            SizedBox(
-              width: 300,
-              child: ComponentButton(context, "TextField", "Input field for text", Textf()),
-            ),
-            SizedBox(
-              width: 300,
-              child: ComponentButton(context, "PasswordField", "Input field for passwords", PasswordT()),
-            ),
-            SizedBox(
-              width: 300,
-              child: ComponentButton(context, "Column", "Arranges elements vertically", ColumnF()),
-            ),
-            SizedBox(
-              width: 300,
-              child: ComponentButton(context, "Row", "Arranges elements horizontally", RowF()),
-            ),
-            SizedBox(height: 50),
+            SectionTitle("Display"),
+            ComponentButton(context, "Text", "Displays text", TextDetailScreen()),
+            ComponentButton(context, "Image", "Displays an image", image()),
+
+            SectionTitle("Input"),
+            ComponentButton(context, "TextField", "Input field for text", Textf()),
+            ComponentButton(context, "PasswordField", "Input field for passwords", PasswordT()),
+
+            SectionTitle("Layout"),
+            ComponentButton(context, "Column", "Arranges elements vertically", ColumnF()),
+            ComponentButton(context, "Row", "Arranges elements horizontally", RowF()),
           ],
         ),
+      ),
+    );
+  }
+
+  Widget SectionTitle(String title) {
+    return Padding(
+      padding: EdgeInsets.symmetric(vertical: 10),
+      child: Text(
+        title,
+        style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
       ),
     );
   }
@@ -60,28 +57,39 @@ class ComponentsScreen extends StatelessWidget {
   Widget ComponentButton(BuildContext context, String title, String subtitle, Widget? screen) {
     return Padding(
       padding: EdgeInsets.symmetric(vertical: 5),
-      child: ElevatedButton(
-        style: ElevatedButton.styleFrom(
-          backgroundColor: Colors.lightBlueAccent,
-          padding: EdgeInsets.all(15),
-          alignment: Alignment.center,
-        ),
-        onPressed: screen != null
-            ? () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => screen),
-          );
-        }
-            : null,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(title, style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-            Text(subtitle, style: TextStyle(fontSize: 14)),
-          ],
+      child: SizedBox(
+        width: double.infinity,
+        child: ElevatedButton(
+          style: ElevatedButton.styleFrom(
+            backgroundColor: Colors.lightBlueAccent,
+            padding: EdgeInsets.all(15),
+            alignment: Alignment.centerLeft,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10),
+            ),
+          ),
+          onPressed: screen != null
+              ? () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => screen),
+            );
+          }
+              : null,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                title,
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black),
+              ),
+              Text(
+                subtitle,
+                style: TextStyle(fontSize: 14, color: Colors.black),
+              ),
+            ],
+          ),
         ),
       ),
     );
-  }
-}
+  }}
